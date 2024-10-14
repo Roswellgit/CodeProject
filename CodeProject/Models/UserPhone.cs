@@ -1,9 +1,9 @@
 ﻿namespace CodeProject.Models
 {
-    public class Phone
+    public class UserPhone
     {
         public string Name { get; set; }
-        public int Num { get; set; }
+        public string Num { get; set; }
 
         public string Email { get; set; }
 

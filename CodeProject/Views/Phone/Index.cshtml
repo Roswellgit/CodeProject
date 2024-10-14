@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CodeProject.Models.Phone>
+﻿@model IEnumerable<CodeProject.Models.UserPhone>
 
 @{
     ViewData["Title"] = "View";
@@ -28,6 +28,7 @@
         </tr>
     </thead>
     <tbody>
+ @if(Model != null)
 @foreach (var item in Model) {
         <tr>
             <td>

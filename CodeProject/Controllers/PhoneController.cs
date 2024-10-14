@@ -12,16 +12,16 @@ namespace CodeProject.Controllers
         // GET: PhoneController
         public async Task<ActionResult> Index()
         {
-            string apiUrl = "https://localhost:7014/api/user";
+            string apiUrl = "https://localhost:7082/api/user";
 
-            List<Phone> phoneList = new List<Phone>();
+            List<UserPhone> phoneList = new List<UserPhone>();
 
             using (HttpClient client = new HttpClient())
             {   
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 var result = await response.Content.ReadAsStringAsync();
-                phoneList = JsonConvert.DeserializeObject<List<Phone>>(result);
+                phoneList = JsonConvert.DeserializeObject<List<UserPhone>>(result);
             }
                 return View();
         }
@@ -41,12 +41,12 @@ namespace CodeProject.Controllers
         // POST: PhoneController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Phone phone)
+        public async Task<ActionResult> Create(UserPhone user)
         {
-            string apiUrl = "https://localhost:7014/api/user";
+            string apiUrl = "https://localhost:7082/api/user";
             using (HttpClient client = new HttpClient())
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(phone), Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
 
@@ -55,7 +55,7 @@ namespace CodeProject.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return View(phone);
+            return View(user);
              
         }
 
