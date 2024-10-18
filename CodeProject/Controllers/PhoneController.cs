@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace CodeProject.Controllers
 {
@@ -12,7 +13,7 @@ namespace CodeProject.Controllers
         // GET: PhoneController
         public async Task<ActionResult> Index()
         {
-            string apiUrl = "https://localhost:7082/api/user";
+            string apiUrl = "https://localhost:7082/api/user/View";
 
             List<UserPhone> phoneList = new List<UserPhone>();
 
@@ -23,7 +24,7 @@ namespace CodeProject.Controllers
                 var result = await response.Content.ReadAsStringAsync();
                 phoneList = JsonConvert.DeserializeObject<List<UserPhone>>(result);
             }
-                return View();
+                return View(phoneList);
         }
 
         // GET: PhoneController/Details/5
@@ -41,12 +42,12 @@ namespace CodeProject.Controllers
         // POST: PhoneController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(UserPhone user)
+        public async Task<ActionResult> Create(UserPhone userphone)
         {
-            string apiUrl = "https://localhost:7082/api/user";
+            string apiUrl = "https://localhost:7082/api/user/Create";
             using (HttpClient client = new HttpClient())
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(userphone), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
 
@@ -55,7 +56,7 @@ namespace CodeProject.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return View(user);
+            return View(userphone);
              
         }
 
@@ -68,37 +69,48 @@ namespace CodeProject.Controllers
         // POST: PhoneController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(UserPhone userphone)
         {
-            try
+            string apiUrl = "https://localhost:7082/api/user/Update";
+            using (HttpClient client = new HttpClient())
             {
-                return RedirectToAction(nameof(Index));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(userphone), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PatchAsync(apiUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(userphone);
         }
 
         // GET: PhoneController/Delete/5
         public ActionResult Delete(int id)
         {
+        
             return View();
         }
 
         // POST: PhoneController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(UserPhone userPhone)
         {
-            try
+            string apiUrl = "https://localhost:7082/api/user/Remove";
+            using (HttpClient client = new HttpClient())
             {
-                return RedirectToAction(nameof(Index));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(userPhone), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(userPhone);
         }
     }
 }

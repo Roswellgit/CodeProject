@@ -1,13 +1,19 @@
 ﻿@model IEnumerable<CodeProject.Models.UserPhone>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Index";
 }
 
-<h1>View</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create PhoneContact</a>
+</p>
+<p>
+    <a asp-action="Edit">Edit PhoneContact</a>
+</p>
+<p>
+    <a asp-action="Delete">Delete PhoneContact</a>
 </p>
 <table class="table">
     <thead>
@@ -28,7 +34,6 @@
         </tr>
     </thead>
     <tbody>
- @if(Model != null)
 @foreach (var item in Model) {
         <tr>
             <td>
