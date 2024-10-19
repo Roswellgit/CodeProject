@@ -96,12 +96,12 @@ namespace CodeProject.Controllers
         // POST: PhoneController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(UserPhone userPhone)
+        public async Task<ActionResult> Delete(string Name)
         {
-            string apiUrl = "https://localhost:7082/api/user/Remove";
+            string apiUrl = $"https://localhost:7082/api/user/Remove?Name={Name}";
             using (HttpClient client = new HttpClient())
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(userPhone), Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(Name), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.DeleteAsync(apiUrl);
 
@@ -110,7 +110,7 @@ namespace CodeProject.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return View(userPhone);
+            return View(Name);
         }
     }
 }
