@@ -1,30 +1,15 @@
-﻿@model IEnumerable<CodeProject.Models.Cats>
-
+﻿@model Cats
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "About Cats";
 }
 
-<h1>Index</h1>
+<h1> @ViewData["Title"]</h1>
+
+<div>
+	<h3>Facts about Cats </h3>
+	<p>@Model.fact </p>
+	<p>@Model.length characters</p>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fact)
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fact)
-            </td>
-
-        </tr>
-}
-    </tbody>
-</table>
+</div>

@@ -2,7 +2,7 @@
 {
     public class Cats
     {
-        public string Fact { get; set; }
-        public string User { get; set; }
+        public string fact { get; set; }
+        public int length { get; set; }
     }
 }

@@ -13,17 +13,13 @@ namespace CodeProject.Controllers
         // GET: CatController
         public async Task<ActionResult> Index()
         {
-            string apiUrl = "https://cat-fact.herokuapp.com/#/cat/facts";
+            string apiUrl = "https://catfact.ninja/fact";
 
-            List<Cats> quo = new List<Cats>();
+         
+            HttpClient client = new HttpClient();
 
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                var result = await response.Content.ReadAsStringAsync();
-                quo = JsonConvert.DeserializeObject<List<Cats>>(result);
-            }
+            var response = await client.GetStringAsync(apiUrl);
+            var quo = JsonConvert.DeserializeObject<Cats>(response);
             return View(quo);
         }
         // GET: CatController/Details/5
